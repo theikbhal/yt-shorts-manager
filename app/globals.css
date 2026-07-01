@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --neon-pink: #ff00ff;
+  --neon-cyan: #00ffff;
+  --neon-green: #39ff14;
+  --neon-yellow: #ffff00;
+  --neon-orange: #ff6600;
+}
+
+body {
+  background-color: #000;
+  color: #fff;
+}
+
+.neon-border {
+  border: 1px solid var(--neon-cyan);
+  box-shadow: 0 0 10px var(--neon-cyan), inset 0 0 10px rgba(0, 255, 255, 0.1);
+}
+
+.neon-border-pink {
+  border: 1px solid var(--neon-pink);
+  box-shadow: 0 0 10px var(--neon-pink), inset 0 0 10px rgba(255, 0, 255, 0.1);
+}
+
+.neon-border-green {
+  border: 1px solid var(--neon-green);
+  box-shadow: 0 0 10px var(--neon-green), inset 0 0 10px rgba(57, 255, 20, 0.1);
+}
+
+.btn-neon {
+  @apply px-4 py-2 rounded-lg font-semibold transition-all duration-300;
+  background: linear-gradient(135deg, var(--neon-pink), var(--neon-cyan));
+  color: #000;
+}
+
+.btn-neon:hover {
+  box-shadow: 0 0 20px var(--neon-pink), 0 0 40px var(--neon-cyan);
+  transform: translateY(-2px);
+}
+
+.btn-neon-outline {
+  @apply px-4 py-2 rounded-lg font-semibold transition-all duration-300 border;
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+}
+
+.btn-neon-outline:hover {
+  background: var(--neon-cyan);
+  color: #000;
+  box-shadow: 0 0 20px var(--neon-cyan);
+}
+
+.input-neon {
+  @apply w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-colors;
+}
+
+.input-neon:focus {
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+textarea-neon {
+  @apply w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-colors resize-none;
+}
+
+.card {
+  @apply p-4 rounded-xl bg-gray-900/50 backdrop-blur-sm transition-all duration-300;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+}
+
+.status-downloaded {
+  @apply text-neon-green;
+}
+
+.status-pending {
+  @apply text-neon-yellow;
+}
+
+@keyframes glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
