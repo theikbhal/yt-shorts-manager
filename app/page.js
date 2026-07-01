@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react'
 import { getSupabase } from '../lib/supabase'
 import ProjectCard from '../components/ProjectCard'
 import CreateProjectModal from '../components/CreateProjectModal'
-import { FiPlus, FiFolder, FiVideo, FiDownload } from 'react-icons/fi'
+import { FiPlus, FiFolder, FiVideo, FiDownload, FiZap } from 'react-icons/fi'
+import Link from 'next/link'
 
 export default function Home() {
   const [projects, setProjects] = useState([])
@@ -59,13 +60,22 @@ export default function Home() {
                 <p className="text-xs text-gray-400">Manage your YouTube Shorts projects</p>
               </div>
             </div>
-            <button
-              onClick={() => setShowModal(true)}
-              className="btn-neon flex items-center gap-2"
-            >
-              <FiPlus className="text-lg" />
-              <span className="hidden sm:inline">New Project</span>
-            </button>
+            <div className="flex items-center gap-2">
+              <Link
+                href="/simple"
+                className="btn-neon-outline flex items-center gap-2 text-sm"
+              >
+                <FiZap className="text-neon-yellow" />
+                <span className="hidden sm:inline">Simple Mode</span>
+              </Link>
+              <button
+                onClick={() => setShowModal(true)}
+                className="btn-neon flex items-center gap-2"
+              >
+                <FiPlus className="text-lg" />
+                <span className="hidden sm:inline">New Project</span>
+              </button>
+            </div>
           </div>
         </div>
       </header>
