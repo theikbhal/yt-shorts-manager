@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { supabase } from '../lib/supabase'
+import { getSupabase } from '../lib/supabase'
 import { FiFolder, FiVideo, FiDownload, FiEdit2, FiTrash2, FiExternalLink } from 'react-icons/fi'
 
 export default function ProjectCard({ project, onUpdate }) {
@@ -17,12 +17,12 @@ export default function ProjectCard({ project, onUpdate }) {
   }, [project.id])
 
   async function fetchCounts() {
-    const { count: total } = await supabase
+    const { count: total } = await getSupabase()
       .from('videos')
       .select('*', { count: 'exact', head: true })
       .eq('project_id', project.id)
 
-    const { count: downloaded } = await supabase
+    const { count: downloaded } = await getSupabase()
       .from('videos')
       .select('*', { count: 'exact', head: true })
       .eq('project_id', project.id)
@@ -33,7 +33,7 @@ export default function ProjectCard({ project, onUpdate }) {
   }
 
   async function handleUpdateName() {
-    await supabase
+    await getSupabase()
       .from('projects')
       .update({ name })
       .eq('id', project.id)
@@ -43,8 +43,8 @@ export default function ProjectCard({ project, onUpdate }) {
 
   async function handleDelete() {
     if (confirm('Delete this project and all its videos?')) {
-      await supabase.from('videos').delete().eq('project_id', project.id)
-      await supabase.from('projects').delete().eq('id', project.id)
+      await getSupabase().from('videos').delete().eq('project_id', project.id)
+      await getSupabase().from('projects').delete().eq('id', project.id)
       onUpdate()
     }
   }

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { supabase } from '../lib/supabase'
+import { getSupabase } from '../lib/supabase'
 import ProjectCard from '../components/ProjectCard'
 import CreateProjectModal from '../components/CreateProjectModal'
 import { FiPlus, FiFolder, FiVideo, FiDownload } from 'react-icons/fi'
@@ -18,7 +18,7 @@ export default function Home() {
 
   async function fetchProjects() {
     setLoading(true)
-    const { data: projectsData, error } = await supabase
+    const { data: projectsData, error } = await getSupabase()
       .from('projects')
       .select('*')
       .order('created_at', { ascending: false })
@@ -26,11 +26,11 @@ export default function Home() {
     if (projectsData) {
       setProjects(projectsData)
       
-      const { count: videoCount } = await supabase
+      const { count: videoCount } = await getSupabase()
         .from('videos')
         .select('*', { count: 'exact', head: true })
 
-      const { count: downloadedCount } = await supabase
+      const { count: downloadedCount } = await getSupabase()
         .from('videos')
         .select('*', { count: 'exact', head: true })
         .eq('downloaded', true)

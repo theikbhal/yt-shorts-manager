@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { supabase } from '../lib/supabase'
+import { getSupabase } from '../lib/supabase'
 import { FiX, FiFolder, FiFileText } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 
@@ -19,7 +19,7 @@ export default function CreateProjectModal({ onClose, onCreated }) {
     }
 
     setLoading(true)
-    const { error } = await supabase
+    const { error } = await getSupabase()
       .from('projects')
       .insert({
         name: name.trim(),

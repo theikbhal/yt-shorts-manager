@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { supabase } from '../lib/supabase'
+import { getSupabase } from '../lib/supabase'
 import { FiX, FiUpload, FiLink } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 
@@ -29,7 +29,7 @@ export default function BulkImportModal({ projectId, onClose, onImported }) {
     let count = 0
 
     for (const url of validUrls) {
-      const { error } = await supabase
+      const { error } = await getSupabase()
         .from('videos')
         .insert({
           project_id: projectId,

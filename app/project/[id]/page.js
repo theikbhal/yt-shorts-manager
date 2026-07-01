@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { supabase } from '../../../lib/supabase'
+import { getSupabase } from '../../../lib/supabase'
 import VideoCard from '../../../components/VideoCard'
 import BulkImportModal from '../../../components/BulkImportModal'
 import { FiArrowLeft, FiPlus, FiDownload, FiCheck, FiVideo, FiCopy } from 'react-icons/fi'
@@ -28,7 +28,7 @@ export default function ProjectPage() {
   }, [params.id])
 
   async function fetchProject() {
-    const { data } = await supabase
+    const { data } = await getSupabase()
       .from('projects')
       .select('*')
       .eq('id', params.id)
@@ -43,7 +43,7 @@ export default function ProjectPage() {
 
   async function fetchVideos() {
     setLoading(true)
-    const { data } = await supabase
+    const { data } = await getSupabase()
       .from('videos')
       .select('*')
       .eq('project_id', params.id)
@@ -54,7 +54,7 @@ export default function ProjectPage() {
   }
 
   async function updateProjectNotes() {
-    await supabase
+    await getSupabase()
       .from('projects')
       .update({ notes: projectNotes })
       .eq('id', params.id)
@@ -63,7 +63,7 @@ export default function ProjectPage() {
   }
 
   async function updateFolderPath() {
-    await supabase
+    await getSupabase()
       .from('projects')
       .update({ folder_path: folderPath })
       .eq('id', params.id)

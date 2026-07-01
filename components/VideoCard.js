@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { supabase } from '../lib/supabase'
+import { getSupabase } from '../lib/supabase'
 import { FiVideo, FiCheck, FiExternalLink, FiTrash2, FiEdit2, FiCopy } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 
@@ -10,7 +10,7 @@ export default function VideoCard({ video, onUpdate }) {
   const [notes, setNotes] = useState(video.notes || '')
 
   async function toggleDownloaded() {
-    await supabase
+    await getSupabase()
       .from('videos')
       .update({ downloaded: !video.downloaded })
       .eq('id', video.id)
@@ -18,13 +18,13 @@ export default function VideoCard({ video, onUpdate }) {
   }
 
   async function handleDelete() {
-    await supabase.from('videos').delete().eq('id', video.id)
+    await getSupabase().from('videos').delete().eq('id', video.id)
     toast.success('Video removed')
     onUpdate()
   }
 
   async function saveNotes() {
-    await supabase
+    await getSupabase()
       .from('videos')
       .update({ notes })
       .eq('id', video.id)
