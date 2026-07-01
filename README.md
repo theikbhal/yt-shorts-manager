@@ -2,6 +2,8 @@
 
 A mobile-responsive web app for managing YouTube Shorts video collections.
 
+**Live:** https://yt-shorts-manager.vercel.app
+
 ## Features
 
 - Create and manage projects
@@ -10,43 +12,15 @@ A mobile-responsive web app for managing YouTube Shorts video collections.
 - Add notes at project and video level
 - Store folder paths for downloads
 - Paginated video list
+- Copy all URLs with one click
+- YouTube thumbnail auto-fetch
 - Neon-styled dark UI
 
-## Setup
+## Quick Start
 
 ### 1. Supabase Database
 
-Go to Supabase Dashboard → SQL Editor and run:
-
-```sql
-CREATE TABLE projects (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  name TEXT NOT NULL,
-  notes TEXT,
-  folder_path TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-
-CREATE TABLE videos (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  project_id UUID REFERENCES projects(id) ON DELETE CASCADE,
-  url TEXT NOT NULL,
-  notes TEXT,
-  downloaded BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-
-ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
-ALTER TABLE videos ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY "Allow all for anon" ON projects FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "Allow all for anon" ON videos FOR ALL USING (true) WITH CHECK (true);
-
-CREATE INDEX idx_videos_project_id ON videos(project_id);
-CREATE INDEX idx_videos_downloaded ON videos(downloaded);
-```
+Go to Supabase Dashboard → SQL Editor and run the SQL in `supabase/schema.sql`
 
 ### 2. Install & Run
 
@@ -55,20 +29,24 @@ npm install
 npm run dev
 ```
 
-### 3. Deploy to Vercel
+### 3. Deploy
+
+Already deployed to Vercel. Push to GitHub for auto-deploy:
 
 ```bash
-git init
-git add .
-git commit -m "initial commit"
-git remote add origin <your-github-repo-url>
-git push -u origin main
+git add . && git commit -m "update" && git push
 ```
-
-Then connect to Vercel for auto-deployment.
 
 ## Environment Variables
 
-Already configured in `.env.local`:
-- `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+| Variable | Description |
+|----------|-------------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous key |
+
+## Tech Stack
+
+- Next.js 14
+- Supabase (PostgreSQL)
+- Tailwind CSS
+- Vercel
